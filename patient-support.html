@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Support - Cheyutha Foundation</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Inter -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+    <style>
+        /* Basic Reset and Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f1e7;
+            overflow-x: hidden;
+        }
+
+        /* --- Header --- */
+        header {
+            background: #b8ebe1;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* Container for the logo and name */
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-image {
+            height: 70px;
+            max-width: 100%;
+        }
+
+        .header-name {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .header-name h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #e67e22;
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        /* Desktop Header Actions (formerly nav-wrapper) */
+        .header-desktop-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-grow: 1;
+            justify-content: flex-end;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+            position: relative;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            transition: color 0.3s, border-bottom 0.3s;
+            white-space: nowrap;
+            display: block;
+            padding: 10px 0;
+            border-bottom: 3px solid transparent;
+        }
+
+        nav ul li a:hover {
+            color: #e67e22;
+            border-bottom: 3px solid #e67e22;
+        }
+        
+        /* Highlight the active link for the Patient Support page */
+        nav ul li a[href="patient-support.html"] {
+            color: #e67e22;
+            border-bottom: 3px solid #e67e22;
+        }
+        
+        /* Mobile Header Actions */
+        .header-mobile-actions {
+            display: none; /* Hidden by default on desktop */
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-toggle {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .donate-button {
+            background: linear-gradient(45deg, #e67e22, #f39c12);
+            color: white;
+            padding: 0.7rem 1.6rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 20px rgba(230, 126, 34, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-left: 20px;
+        }
+        
+        .header-mobile-actions .donate-button {
+             padding: 0.5rem 1.2rem;
+             font-size: 0.75rem;
+             margin-left: 0;
+        }
+
+        .donate-button:hover {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 25px rgba(230, 126, 34, 0.4);
+        }
+        
+        .donate-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 50%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+            transition: all 0.5s ease-out;
+            z-index: -1;
+        }
+
+        .donate-button:hover::after {
+            transform: scale(150, 150) translate(-50%);
+            opacity: 1;
+        }
+        
+        /* Mobile menu container that is hidden by default */
+        .mobile-menu-container {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            background: #b8ebe1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            text-align: center;
+            position: fixed;
+            left: 0;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            z-index: 150;
+        }
+
+        .mobile-menu-container.show {
+            display: flex;
+        }
+        
+        /* Main Content */
+        main {
+            padding: 5rem 0;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        .full-width-container {
+            width: 100%;
+            padding: 0;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 900px; /* Decreased max-width for smaller content area */
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem; /* Reduced margin */
+            padding: 2rem 0; /* Reduced padding */
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 800;
+            color: #003366;
+            margin-bottom: 1rem;
+            animation: fadeInScale 1s ease-out;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 0.9rem; /* Decreased font-size for a more concise look */
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 4rem;
+            max-width: 450px; /* Decreased max-width for smaller text block */
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #e67e22, #d35400);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(230, 126, 34, 0.3);
+            margin-top: 2rem;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(45deg, #d35400, #e67e22);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(230, 126, 34, 0.4);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Services Section */
+        #services {
+            background: #fff;
+            padding: 4rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin: 0 2rem 4rem 2rem;
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2.5rem;
+            justify-items: center;
+        }
+        
+        .service-item {
+            background: #fcfcfc;
+            border-radius: 15px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            background-clip: padding-box;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+            border: 2px solid transparent;
+        }
+
+        .service-item.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Gradient border for service cards */
+        .service-item::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 20px;
+            z-index: -1;
+            background-size: 400% 400%;
+            animation: pastelBorderMove 8s ease infinite;
+        }
+
+        .service-item[data-card-id="service-1"]::before { background: linear-gradient(135deg, #d8f3ff 0%, #b6fcd9 100%); }
+        .service-item[data-card-id="service-2"]::before { background: linear-gradient(135deg, #f0f7ff 0%, #e0f0ff 100%); }
+        .service-item[data-card-id="service-3"]::before { background: linear-gradient(135deg, #f0e3ff 0%, #e6d3ff 100%); }
+        .service-item[data-card-id="service-4"]::before { background: linear-gradient(135deg, #fff7e6 0%, #fff0d8 100%); }
+
+        .service-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-item .icon {
+            font-size: 3.5rem;
+            background: linear-gradient(110deg, #42b6df 35%, #b26ed7 66%, #ffb595 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            transition: transform 0.4s ease;
+            animation: iconFloat 3.2s infinite;
+        }
+        
+        .service-item:hover .icon {
+            transform: scale(1.1);
+        }
+
+        .service-item h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .service-item p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        /* Resources Section */
+        #resources {
+            padding: 4rem 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            justify-items: center;
+        }
+
+        .resource-card {
+            background: #b8ebe1;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.6s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            position: relative;
+            background-clip: padding-box;
+            border: 2px solid transparent;
+        }
+
+        .resource-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .resource-card::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 20px;
+            z-index: -1;
+            background-size: 400% 400%;
+            animation: pastelBorderMove 8s ease infinite;
+        }
+
+        .resource-card[data-card-id="resource-1"]::before { background: linear-gradient(135deg, #f0f8ff 0%, #e6f7ff 100%); }
+        .resource-card[data-card-id="resource-2"]::before { background: linear-gradient(135deg, #f0e3ff 0%, #e6d3ff 100%); }
+        .resource-card[data-card-id="resource-3"]::before { background: linear-gradient(135deg, #fff7e6 0%, #fff0d8 100%); }
+
+        .resource-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-card i {
+            font-size: 3rem;
+            color: #e67e22;
+            margin-bottom: 1rem;
+        }
+
+        .resource-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #003366;
+        }
+        
+        .resource-card a {
+            text-decoration: none;
+            color: #003366;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s;
+            display: block; /* Make the entire card a clickable link area */
+            padding: 2rem;
+            margin: -2rem; /* Negate the padding to make it fill the card */
+            border-radius: 15px;
+        }
+        
+        .resource-card a:hover {
+            color: #d35400;
+        }
+        
+        /* Adjustments for the inner content of the links */
+        .resource-card a h3,
+        .resource-card a p,
+        .resource-card a i {
+            margin: 0;
+            color: inherit;
+        }
+        
+        .resource-card a h3 {
+            margin-bottom: 1rem;
+        }
+
+        /* Call to Action Section */
+        #call-to-action {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #b8ebe1 0%, #a4d8cc 100%);
+            border-radius: 15px;
+            margin-bottom: 4rem;
+        }
+        
+        #call-to-action h2 {
+            font-size: 2rem;
+            color: #003366;
+            margin-bottom: 1rem;
+        }
+        
+        #call-to-action p {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: #fff;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section {
+            margin-bottom: 2rem;
+            width: 300px;
+        }
+
+        .footer-section h3 {
+            border-bottom: 2px solid #e67e22;
+            padding-bottom: 0.5rem;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section p,
+        .footer-section li {
+            margin-bottom: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .footer-section a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #e67e22;
+        }
+        
+        .footer-section .footer-links a {
+            display: block;
+            margin-bottom: 0.8rem;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #555;
+            margin-top: 2rem;
+        }
+
+        .footer-section ul {
+            list-style-type: none; /* Removed the list item dots */
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInScale {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes pastelBorderMove {
+            0%, 100% {
+                background-position: 0% 100%
+            }
+            50% {
+                background-position: 100% 0%;
+            }
+        }
+
+        @keyframes iconFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+                flex-direction: row; /* Keep the logo and menu on one line */
+                align-items: center;
+                justify-content: space-between;
+            }
+            .header-brand {
+                width: auto;
+                justify-content: flex-start;
+                gap: 0.5rem;
+                margin-bottom: 0;
+            }
+            .logo-image {
+                height: 50px;
+            }
+            .header-name h1 {
+                font-size: 1.5rem;
+                text-align: left;
+            }
+            .header-desktop-actions {
+                display: none; /* Hide desktop nav on mobile */
+            }
+            .header-mobile-actions {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .menu-toggle {
+                display: block;
+                order: 1;
+                margin-left: auto;
+            }
+            
+            /* Styles for the mobile menu container */
+            .mobile-menu-container {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: #b8ebe1;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                padding: 1rem 0;
+                text-align: center;
+                position: fixed;
+                left: 0;
+                max-height: calc(100vh - 100px);
+                overflow-y: auto;
+                z-index: 150;
+            }
+
+            .mobile-menu-container.show {
+                display: flex;
+            }
+
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+                padding: 1rem 0;
+                text-align: center;
+            }
+
+            /* Corrected mobile menu link styling */
+            nav ul li {
+                margin: 0;
+                padding: 0;
+            }
+
+            nav ul li a {
+                display: inline-block;
+                padding: 15px 20px;
+                width: auto;
+                border-bottom: 3px solid transparent; /* Set transparent border by default */
+            }
+
+            nav ul li a:hover {
+                border-bottom: none;
+            }
+            
+            /* Apply the orange line only to the active link */
+            nav ul li a[href="patient-support.html"] {
+                color: #e67e22;
+                border-bottom: 3px solid #e67e22;
+            }
+            
+            .donate-button {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.75rem;
+                margin-left: 0;
+            }
+            
+            main {
+                padding: 3rem 1rem;
+            }
+            .page-title {
+                font-size: 2.2rem;
+            }
+            .page-subtitle {
+                font-size: 1rem;
+            }
+            .service-item {
+                padding: 2rem;
+            }
+            .service-item h3 {
+                font-size: 1.4rem;
+            }
+            .resource-card h3 {
+                font-size: 1.2rem;
+            }
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .service-grid {
+                grid-template-columns: 1fr; /* Stack on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-brand">
+            <!-- Updated logo with fallback placeholder -->
+            <img src="logo_small.png" onerror="this.onerror=null;this.src='https://placehold.co/100x70/b8ebe1/e67e22?text=CFOT';" alt="CFOT India Logo" class="logo-image">
+            <div class="header-name">
+                <h1>Cheyutha</h1>
+                <h1>Foundation</h1>
+            </div>
+        </div>
+
+        <!-- Desktop navigation container -->
+        <div class="header-desktop-actions">
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="our-work.html">Our Work</a></li>
+                    <li><a href="patient-support.html">Patient Support</a></li>
+                    <li><a href="get-involved.html">Get Involved</a></li>
+                    <li><a href="news-events.html">News & Events</a></li>
+                    <li><a href="annual-reports.html">Annual Reports</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <a href="get-involved.html#donation-section" class="donate-button"><i class="fas fa-hand-holding-heart mr-2"></i>Donate Now</a>
+        </div>
+
+        <!-- Mobile-specific header actions -->
+        <div class="header-mobile-actions">
+            <a href="get-involved.html#donation-section" class="donate-button"><i class="fas fa-hand-holding-heart mr-2"></i>Donate Now</a>
+            <div class="menu-toggle" id="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile menu container, outside of the header -->
+    <div class="mobile-menu-container">
+        <nav>
+            <ul id="mobile-nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="our-work.html">Our Work</a></li>
+                <li><a href="patient-support.html">Patient Support</a></li>
+                <li><a href="get-involved.html">Get Involved</a></li>
+                <li><a href="news-events.html">News & Events</a></li>
+                <li><a href="annual-reports.html">Annual Reports</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Patient Support</h1>
+                <p class="page-subtitle">We are here to support you through your journey with kidney disease and organ transplant. We offer help every step of the way.</p>
+            </div>
+        </div>
+
+        <section id="services">
+            <h2 class="section-title animated-section">Our Services</h2>
+            <div class="service-grid-container">
+                <div class="service-grid">
+                    <div class="service-item" data-card-id="service-1">
+                        <i class="fas fa-hand-holding-medical icon"></i>
+                        <h3>Medical Assistance</h3>
+                        <p>We provide guidance on new treatments, offer subsidized medicines, and supply dialyzer kits to ensure patients receive the care they need without financial strain.</p>
+                    </div>
+                    <div class="service-item" data-card-id="service-2">
+                        <i class="fas fa-heartbeat icon"></i>
+                        <h3>Emotional Support</h3>
+                        <p>Our network of experienced transplant recipients provides empathetic counseling and a strong support system, helping patients and their families build resilience and hope.</p>
+                    </div>
+                    <div class="service-item" data-card-id="service-3">
+                        <i class="fas fa-sack-dollar icon"></i>
+                        <h3>Financial Aid</h3>
+                        <p>We offer financial assistance to eligible patients to help cover the costs of transplant surgery, post-operative care, and other related medical expenses.</p>
+                    </div>
+                    <div class="service-item" data-card-id="service-4">
+                        <i class="fas fa-bus icon"></i>
+                        <h3>Transportation Services</h3>
+                        <p>To ease the burden of travel, we offer transportation support to ensure you can get to and from your medical appointments, including dialysis sessions and check-ups.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="resources">
+            <h2 class="section-title animated-section">Patient Resources</h2>
+            <div class="resource-grid-container">
+                <div class="resource-grid">
+                    <div class="resource-card" data-card-id="resource-1">
+                        <a href="news-events.html">
+                            <i class="fas fa-book-reader"></i>
+                            <h3>Medical Information</h3>
+                            <p>Access our library of trusted articles and guides on kidney health, diet, and post-transplant recovery.</p>
+                            <span>Explore Now <i class="fas fa-arrow-right"></i></span>
+                        </a>
+                    </div>
+                    <div class="resource-card" data-card-id="resource-2">
+                        <a href="contact.html">
+                            <i class="fas fa-users"></i>
+                            <h3>Support Groups</h3>
+                            <p>Connect with a compassionate community of patients and families who understand your journey. Share your story and find strength.</p>
+                            <span>Join a Group <i class="fas fa-arrow-right"></i></span>
+                        </a>
+                    </div>
+                    <div class="resource-card" data-card-id="resource-3">
+                        <a href="contact.html">
+                            <i class="fas fa-comments"></i>
+                            <h3>Online Forums</h3>
+                            <p>Engage with our moderated online forums to ask questions, get advice, and connect with a broader support network.</p>
+                            <span>Visit Forums <i class="fas fa-arrow-right"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="call-to-action">
+            <h2>Need Support? We Are Here for You.</h2>
+            <p>Our team is available 24/7 to answer your questions and provide the support you need. Your journey to recovery is our mission.</p>
+            <a href="contact.html" class="cta-button">Contact Our Patient Support Team</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 4-224, Shamshabad - Mamidipally Rd, Velankanni Nagar, Shamshabad, Hyderabad, Telangana 501218, India</p>
+                <p><i class="fas fa-phone"></i> 8328605200</p>
+                <p><i class="fas fa-envelope"></i> cheyuthafoundation.organ@gmail.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="about-us.html">About Us</a>
+                    <a href="our-work.html">Our Work</a>
+                    <a href="patient-support.html">Patient Support</a>
+                    <a href="get-involved.html">Get Involved</a>
+                    <a href="news-events.html">News & Events</a>
+                    <a href="annual-reports.html">Annual Reports</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/cfotindia/"><i class="fab fa-facebook"></i></a>
+                    <a href="https://x.com/cfotindia"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/cheyuthafoundation/"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/channel/UCf5t0CP3B7B380GFviLz7MQ"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Cheyutha Foundation for Organ Transplants. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Mobile Menu Toggle Logic ---
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuContainer = document.querySelector('.mobile-menu-container');
+            const navMenu = document.getElementById('mobile-nav-menu'); // Corrected ID reference
+            
+            if (mobileMenu && mobileMenuContainer) {
+                mobileMenu.addEventListener('click', function() {
+                    mobileMenuContainer.classList.toggle('show');
+                    this.querySelector('i').classList.toggle('fa-bars');
+                    this.querySelector('i').classList.toggle('fa-times');
+                });
+            }
+
+            // --- Intersection Observer for Animations ---
+            const animatedElements = document.querySelectorAll('.animated-section');
+            const serviceItems = document.querySelectorAll('.service-item');
+            const resourceCards = document.querySelectorAll('.resource-card');
+
+            const appearOptions = {
+                threshold: 0.2
+            };
+
+            const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, appearOptions);
+
+            animatedElements.forEach(element => {
+                appearOnScroll.observe(element);
+            });
+            
+            // Staggered animation for service and resource cards
+            const staggerObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const elements = entry.target.querySelectorAll('.service-item, .resource-card');
+                        elements.forEach((el, index) => {
+                            setTimeout(() => {
+                                el.style.opacity = '1';
+                                el.style.transform = 'translateY(0)';
+                            }, index * 200);
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            // Apply the stagger observer to the parent containers
+            const serviceGrid = document.querySelector('.service-grid');
+            const resourceGrid = document.querySelector('.resource-grid');
+            if (serviceGrid) staggerObserver.observe(serviceGrid);
+            if (resourceGrid) staggerObserver.observe(resourceGrid);
+
+            // New script to fix the gap in the mobile menu
+            const header = document.querySelector('header');
+            const mobileMenuNavContainer = document.querySelector('.mobile-menu-container');
+
+            function adjustMobileMenuPosition() {
+                // Get the height of the header element
+                const headerHeight = header.offsetHeight;
+                // Set the top position of the mobile menu to match the header height
+                mobileMenuNavContainer.style.top = `${headerHeight}px`;
+            }
+
+            // Call the function on page load and window resize to handle changes
+            adjustMobileMenuPosition();
+            window.addEventListener('resize', adjustMobileMenuPosition);
+        });
+    </script>
+</body>
+</html>
